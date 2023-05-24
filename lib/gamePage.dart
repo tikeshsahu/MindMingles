@@ -68,7 +68,7 @@ class _GamePageState extends State<GamePage> {
               itemCount: players.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(5.0),
                   child: Card(
                     color: Colors.orange,
                     child: ListTile(
