@@ -44,51 +44,58 @@ class _GamePageState extends State<GamePage> {
           ],
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 10,
-          ),
-          const Text(
-            'Players',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 10,
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.65,
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: players.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Card(
-                    color: Colors.orange,
-                    child: ListTile(
-                      title: Text(players[index]),
-                      trailing: IconButton(
-                        onPressed: () {
-                          removePlayer(players[index]);
-                        },
-                        icon: const Icon(
-                          Icons.remove_circle,
-                          color: Colors.brown,
-                        ),
-                      ),
-                    ),
+            const Text(
+              'Players',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            playersList(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  SizedBox playersList(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height -
+          MediaQuery.of(context).size.height * 0.37,
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: players.length,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+            child: Card(
+              color: Colors.orange,
+              child: ListTile(
+                title: Text(players[index]),
+                trailing: IconButton(
+                  onPressed: () {
+                    removePlayer(players[index]);
+                  },
+                  icon: const Icon(
+                    Icons.remove_circle,
+                    color: Colors.brown,
                   ),
-                );
-              },
+                ),
+              ),
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
@@ -113,6 +120,7 @@ class _GamePageState extends State<GamePage> {
             if (playerNameController.text.isNotEmpty) {
               addPlayer(playerNameController.text);
               playerNameController.clear();
+              FocusScope.of(context).unfocus();
             } else {
               showDialog(
                 context: context,
